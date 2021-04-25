@@ -11,6 +11,9 @@ const { Portfolio, Wallet } = require('../lib/models');
 //DELETE  /portfolio/:id -> http://localhost:3000/api/v1/portfolio/23
 //GET  /wallet -> http://localhost:3000/api/v1/wallet
 
+router.get('/search/:symbol', async (req, res) => {
+    console.log('req.params is', req.params);
+    res.json(item)
 
 router.post('/portfolio', async (req, res) => {
     console.log('req.body is', req.body);
