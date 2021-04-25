@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const { Portfolio, Wallet } = require('../lib/models');
+const yahooStockPrices = require('yahoo-stock-prices');
 
 
 
@@ -12,8 +13,10 @@ const { Portfolio, Wallet } = require('../lib/models');
 //GET  /wallet -> http://localhost:3000/api/v1/wallet
 
 router.get('/search/:symbol', async (req, res) => {
-    console.log('req.params is', req.params);
-    res.json(item)
+    console.log('req.params are', req.params);
+    const data = await yahooStockPrices.getCurrentData(req.params.symbol);
+    console.log(data); // { currency: 'USD', price: 132.05 }
+    res.json(data)
 })
 
 router.post('/portfolio', async (req, res) => {
