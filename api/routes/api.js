@@ -14,6 +14,7 @@ const { Portfolio, Wallet } = require('../lib/models');
 router.get('/search/:symbol', async (req, res) => {
     console.log('req.params is', req.params);
     res.json(item)
+})
 
 router.post('/portfolio', async (req, res) => {
     console.log('req.body is', req.body);
