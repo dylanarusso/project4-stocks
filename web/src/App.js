@@ -6,6 +6,7 @@ import {useState} from 'react'
 function App() {
 
   const [activeSearch, setActiveSearch] = useState();
+  const [stockPrice, setStockPrice] = useState();
 
 
   const updateActiveSearch = (ev) => {
@@ -16,17 +17,20 @@ function App() {
   const searchStock = async () => {
     let res = await fetch(`http://localhost:3000/api/v1/search/${activeSearch}`);
     let json = await res.json();
-    console.log(json);
-
+    // console.log(json);
+    setStockPrice;
   
+
   };
+
+
 
 
   return (
     <>
 
 
-      <div className={'grid grid-cols-12'}>
+      <div className={'grid grid-cols-12 font-serif'}>
        
         <div className={'col-span-12 border border-white border-b-4 bg-gray-300'}>
           <h1 className={'text-center text-4xl p-5'}>Paper Trader</h1>
@@ -48,6 +52,12 @@ function App() {
 
             <div className={'col-span-6 h-32 border p-5'}>
               Stock name
+
+            {stockPrice}
+          
+            
+
+
 
 
             </div>
