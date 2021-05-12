@@ -2,6 +2,7 @@ import './App.css';
 
 import {useState} from 'react'
 import {useEffect} from 'react';
+// import Chart from './Components/Chart';
 // import { search } from '../../api/app'
 
 function App() {
@@ -26,12 +27,15 @@ function App() {
   
   };
 
+    // const prices = await yahooStockPrices.getHistoricalPrices(0, 6, 2020, 0, 8, 2020, 'AAPL', '1d');
+    // console.log(prices);
+
   const fetchWallet = async () => {
     console.log('fetches the wallet')
     let res = await fetch('http://localhost:3000/api/v1/wallet');
     let json = await res.json();
     console.log(json);
-    setWallet(json.value);
+    setWallet(parseInt(json.value));
   };
 
   useEffect(() => {
@@ -40,8 +44,12 @@ function App() {
 
   const buyStock = async () => {
     console.log('buy stock')
-    let cashRequired = buyQuantity * activeSearch.price;
+    console.log(buyQuantity)
+    console.log(stockPrice)
+    console.log(activeSearch)
+    let cashRequired = buyQuantity * stockPrice;
     console.log(cashRequired)
+    console.log(wallet)
     if(cashRequired <= wallet){
         let res = await fetch(`http://localhost:3000/api/v1/portfolio`, {
             method: 'POST',
@@ -51,7 +59,7 @@ function App() {
             body: JSON.stringify({
                 symbol: searchTerm,
                 quantity: buyQuantity,
-                price: activeSearch.price
+                price: stockPrice,
             })
         });
         let json = await res.json();
@@ -104,8 +112,11 @@ function App() {
             <div className={'col-span-6 h-32 border p-5'}>
             
 
-            <div>Stock Symbol: {activeSearch}</div>
-            <div>Stock Price: {stockPrice} USD</div>
+            <div className={'text-2xl'}>Stock Symbol: {activeSearch}</div>
+            <div className={'text-2xl'}>Stock Price: {stockPrice} USD</div>
+
+          {/* Chart */}
+
 
 
             </div>
@@ -135,14 +146,13 @@ function App() {
 
         </div>
 
+        
         <div className={'col-span-12 md:col-span-5 h-96 bg-gray-300'}>
             {/* Portfolio Chart */}
 
         </div>
 
       </div>
-
-
 
     </>
   );

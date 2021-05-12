@@ -23,6 +23,14 @@ router.post('/portfolio', async (req, res) => {
     console.log('req.body is', req.body);
     let item = await Portfolio.create(req.body);
     res.json(item)
+    let currentWallet = await Wallet.findOne({});
+    if(currentWallet){
+        let currentWalletValue = currentWallet.value;
+        let amountSpent = req.body.quantity * req.body.price;
+        let newWalletValue = currentWalletValue - amountSpent;
+        console.log('newWalletValue', newWalletValue);
+        currentWallet.update({value: newWalletValue})
+    }
 })
 
 router.delete('/portfolio/:id', async (req, res) => {
