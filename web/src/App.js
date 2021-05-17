@@ -52,6 +52,14 @@ function App() {
     fetchPortfolio();
   }, [])
 
+  const sellStock = async (id) => {
+    console.log('selling the stock with the id number', id);
+
+    await fetch(`http://localhost:3000/api/v1/portfolio/${id}`, {method: 'DELETE'})
+    alert('Success!');
+    window.location.reload();
+     };
+
   const buyStock = async () => {
     console.log('buy stock')
     console.log(buyQuantity)
@@ -79,6 +87,7 @@ function App() {
         setBuyQuantity()
         setSearchTerm()
         setActiveSearch()
+
 
     } else {
         alert('Error: Not enough funds to complete transaction');
@@ -175,9 +184,9 @@ function App() {
                             <td className={'border text-center'}>{item.quantity}</td>
                             <td className={'border text-center'}>{item.price}</td>
                             <td className={'border text-center p-4'}>
-                                {/* <span onClick={() => {
+                                <span onClick={() => {
                                     sellStock(item.id);
-                                }} className={'p-2 pl-4 pr-4 bg-blue-500 rounded text-white cursor-pointer'}>Sell</span> */}
+                                }} className={'p-2 pl-4 pr-4 bg-blue-500 rounded text-white cursor-pointer'}>Sell</span>
 
                             </td>
                         </tr>
