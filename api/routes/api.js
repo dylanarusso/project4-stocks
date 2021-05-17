@@ -45,6 +45,12 @@ router.get('/wallet', async (req, res) => {
     res.json(item)
 })
 
+router.get('/portfolio', async (req, res) => {
+    //console.log('req.params is', req.params);
+    let items = await Portfolio.findAll({})
+    res.json(items)
+})
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });

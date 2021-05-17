@@ -12,6 +12,7 @@ function App() {
   const [wallet, setWallet] = useState();
   const [buyQuantity, setBuyQuantity] = useState();
   const [searchTerm, setSearchTerm] = useState();
+  const [currentPortfolio, setCurrentPortfolio] = useState();
 
 
   const updateActiveSearch = (ev) => {
@@ -38,8 +39,17 @@ function App() {
     setWallet(parseInt(json.value));
   };
 
+  const fetchPortfolio = async () => {
+    console.log('fetches the wallet')
+    let res = await fetch('http://localhost:3000/api/v1/portfolio');
+    let json = await res.json();
+    console.log(json);
+    setCurrentPortfolio(json);
+  };
+
   useEffect(() => {
     fetchWallet();
+    fetchPortfolio();
   }, [])
 
   const buyStock = async () => {
@@ -78,7 +88,6 @@ function App() {
 
 
 
-
   return (
     <>
 
@@ -86,7 +95,7 @@ function App() {
       <div className={'grid grid-cols-12 font-serif'}>
        
         <div className={'col-span-12 border border-white border-b-4 bg-gray-300'}>
-          <h1 className={'text-center text-4xl p-5'}>Paper Trader</h1>
+          <h1 className={'text-center text-4xl p-5'}>Personal E-Trader</h1>
         </div>
 
 
@@ -149,6 +158,35 @@ function App() {
         
         <div className={'col-span-12 md:col-span-5 h-96 bg-gray-300'}>
             {/* Portfolio Chart */}
+            <h1 className={'text-center text-2xl p-5'}>Portfolio Dashboard</h1>
+
+            {/* <ul> {currentPortfolio  && currentPortfolio.map((item) => { return <li key={item.id}>{item.symbol}</li> })} </ul> */}
+
+            {currentPortfolio && <table style={{width: '100%'}}>
+                <thead>
+                    <th className={'border'}>Stock</th>
+                    <th className={'border'}>Quantity</th>
+                    <th className={'border'}>Value</th>
+                </thead>
+                <tbody>
+                    {currentPortfolio.map((item, idx) => {
+                        return <tr key={idx}>
+                            <td className={'border text-center'}>{item.symbol}</td>
+                            <td className={'border text-center'}>{item.quantity}</td>
+                            <td className={'border text-center'}>{item.price}</td>
+                            <td className={'border text-center p-4'}>
+                                {/* <span onClick={() => {
+                                    sellStock(item.id);
+                                }} className={'p-2 pl-4 pr-4 bg-blue-500 rounded text-white cursor-pointer'}>Sell</span> */}
+
+                            </td>
+                        </tr>
+
+                    })}
+
+
+                </tbody>
+            </table>}
 
         </div>
 
